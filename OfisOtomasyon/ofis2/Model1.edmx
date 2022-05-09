@@ -1,0 +1,409 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="OfisDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Demirbas">
+          <Key>
+            <PropertyRef Name="demirbasID" />
+          </Key>
+          <Property Name="demirbasID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="esyaAdi" Type="nvarchar" MaxLength="50" />
+          <Property Name="adet" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Gider">
+          <Key>
+            <PropertyRef Name="giderID" />
+          </Key>
+          <Property Name="giderID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="giderAdi" Type="nvarchar" MaxLength="50" />
+          <Property Name="giderMiktari" Type="nvarchar" MaxLength="50" />
+          <Property Name="tarih" Type="smalldatetime" />
+          <Property Name="donem" Type="nvarchar" MaxLength="50" />
+          <Property Name="aciklama" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Kullanici">
+          <Key>
+            <PropertyRef Name="kullaniciID" />
+          </Key>
+          <Property Name="kullaniciID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="kullaniciAdi" Type="nvarchar" MaxLength="50" />
+          <Property Name="kullaniciSifre" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="OfisTakvimi">
+          <Key>
+            <PropertyRef Name="günID" />
+          </Key>
+          <Property Name="günID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="günAdi" Type="nvarchar" MaxLength="50" />
+          <Property Name="aralik" Type="nvarchar" MaxLength="50" />
+          <Property Name="stajyerID" Type="int" />
+        </EntityType>
+        <EntityType Name="Projeler">
+          <Key>
+            <PropertyRef Name="projeID" />
+          </Key>
+          <Property Name="projeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="projeAdi" Type="nvarchar" MaxLength="50" />
+          <Property Name="projeBaslangic" Type="smalldatetime" />
+          <Property Name="projeBitis" Type="smalldatetime" />
+          <Property Name="projeAciklamasi" Type="nvarchar(max)" />
+          <Property Name="stajyerID" Type="int" />
+        </EntityType>
+        <EntityType Name="Stajyer">
+          <Key>
+            <PropertyRef Name="stajyerID" />
+          </Key>
+          <Property Name="stajyerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="adsoyad" Type="nvarchar" MaxLength="50" />
+          <Property Name="TC" Type="nvarchar" MaxLength="11" />
+          <Property Name="telefonNo" Type="nvarchar" MaxLength="11" />
+          <Property Name="eposta" Type="nvarchar" MaxLength="50" />
+          <Property Name="universite" Type="nvarchar" MaxLength="50" />
+          <Property Name="stajBaslangic" Type="smalldatetime" />
+          <Property Name="stajBitis" Type="smalldatetime" />
+          <Property Name="durum" Type="bit" />
+        </EntityType>
+        <EntityType Name="StajyerProjeleri">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="stajyerID" Type="int" />
+          <Property Name="projeID" Type="int" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="FK_OfisTakvimi_Stajyer">
+          <End Role="Stajyer" Type="Self.Stajyer" Multiplicity="1" />
+          <End Role="OfisTakvimi" Type="Self.OfisTakvimi" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Stajyer">
+              <PropertyRef Name="stajyerID" />
+            </Principal>
+            <Dependent Role="OfisTakvimi">
+              <PropertyRef Name="günID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StajyerProjeleri_Projeler">
+          <End Role="Projeler" Type="Self.Projeler" Multiplicity="1" />
+          <End Role="StajyerProjeleri" Type="Self.StajyerProjeleri" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Projeler">
+              <PropertyRef Name="projeID" />
+            </Principal>
+            <Dependent Role="StajyerProjeleri">
+              <PropertyRef Name="ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StajyerProjeleri_Stajyer">
+          <End Role="Stajyer" Type="Self.Stajyer" Multiplicity="1" />
+          <End Role="StajyerProjeleri" Type="Self.StajyerProjeleri" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Stajyer">
+              <PropertyRef Name="stajyerID" />
+            </Principal>
+            <Dependent Role="StajyerProjeleri">
+              <PropertyRef Name="ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="OfisDBModelStoreContainer">
+          <EntitySet Name="Demirbas" EntityType="Self.Demirbas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Gider" EntityType="Self.Gider" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Kullanici" EntityType="Self.Kullanici" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OfisTakvimi" EntityType="Self.OfisTakvimi" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Projeler" EntityType="Self.Projeler" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Stajyer" EntityType="Self.Stajyer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StajyerProjeleri" EntityType="Self.StajyerProjeleri" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_OfisTakvimi_Stajyer" Association="Self.FK_OfisTakvimi_Stajyer">
+            <End Role="Stajyer" EntitySet="Stajyer" />
+            <End Role="OfisTakvimi" EntitySet="OfisTakvimi" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StajyerProjeleri_Projeler" Association="Self.FK_StajyerProjeleri_Projeler">
+            <End Role="Projeler" EntitySet="Projeler" />
+            <End Role="StajyerProjeleri" EntitySet="StajyerProjeleri" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StajyerProjeleri_Stajyer" Association="Self.FK_StajyerProjeleri_Stajyer">
+            <End Role="Stajyer" EntitySet="Stajyer" />
+            <End Role="StajyerProjeleri" EntitySet="StajyerProjeleri" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="OfisDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Demirba">
+          <Key>
+            <PropertyRef Name="demirbasID" />
+          </Key>
+          <Property Name="demirbasID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="esyaAdi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="adet" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Gider">
+          <Key>
+            <PropertyRef Name="giderID" />
+          </Key>
+          <Property Name="giderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="giderAdi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="giderMiktari" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="tarih" Type="DateTime" Precision="0" />
+          <Property Name="donem" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="aciklama" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Kullanici">
+          <Key>
+            <PropertyRef Name="kullaniciID" />
+          </Key>
+          <Property Name="kullaniciID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="kullaniciAdi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="kullaniciSifre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="OfisTakvimi">
+          <Key>
+            <PropertyRef Name="günID" />
+          </Key>
+          <Property Name="günID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="günAdi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="aralik" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="stajyerID" Type="Int32" />
+          <NavigationProperty Name="Stajyer" Relationship="Self.FK_OfisTakvimi_Stajyer" FromRole="OfisTakvimi" ToRole="Stajyer" />
+        </EntityType>
+        <EntityType Name="Projeler">
+          <Key>
+            <PropertyRef Name="projeID" />
+          </Key>
+          <Property Name="projeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="projeAdi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="projeBaslangic" Type="DateTime" Precision="0" />
+          <Property Name="projeBitis" Type="DateTime" Precision="0" />
+          <Property Name="projeAciklamasi" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="stajyerID" Type="Int32" />
+          <NavigationProperty Name="StajyerProjeleri" Relationship="Self.FK_StajyerProjeleri_Projeler" FromRole="Projeler" ToRole="StajyerProjeleri" />
+        </EntityType>
+        <EntityType Name="Stajyer">
+          <Key>
+            <PropertyRef Name="stajyerID" />
+          </Key>
+          <Property Name="stajyerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="adsoyad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TC" Type="String" MaxLength="11" FixedLength="false" Unicode="true" />
+          <Property Name="telefonNo" Type="String" MaxLength="11" FixedLength="false" Unicode="true" />
+          <Property Name="eposta" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="universite" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="stajBaslangic" Type="DateTime" Precision="0" />
+          <Property Name="stajBitis" Type="DateTime" Precision="0" />
+          <Property Name="durum" Type="Boolean" />
+          <NavigationProperty Name="OfisTakvimi" Relationship="Self.FK_OfisTakvimi_Stajyer" FromRole="Stajyer" ToRole="OfisTakvimi" />
+          <NavigationProperty Name="StajyerProjeleri" Relationship="Self.FK_StajyerProjeleri_Stajyer" FromRole="Stajyer" ToRole="StajyerProjeleri" />
+        </EntityType>
+        <EntityType Name="StajyerProjeleri">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="stajyerID" Type="Int32" />
+          <Property Name="projeID" Type="Int32" />
+          <NavigationProperty Name="Projeler" Relationship="Self.FK_StajyerProjeleri_Projeler" FromRole="StajyerProjeleri" ToRole="Projeler" />
+          <NavigationProperty Name="Stajyer" Relationship="Self.FK_StajyerProjeleri_Stajyer" FromRole="StajyerProjeleri" ToRole="Stajyer" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK_OfisTakvimi_Stajyer">
+          <End Role="Stajyer" Type="Self.Stajyer" Multiplicity="1" />
+          <End Role="OfisTakvimi" Type="Self.OfisTakvimi" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Stajyer">
+              <PropertyRef Name="stajyerID" />
+            </Principal>
+            <Dependent Role="OfisTakvimi">
+              <PropertyRef Name="günID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StajyerProjeleri_Projeler">
+          <End Role="Projeler" Type="Self.Projeler" Multiplicity="1" />
+          <End Role="StajyerProjeleri" Type="Self.StajyerProjeleri" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Projeler">
+              <PropertyRef Name="projeID" />
+            </Principal>
+            <Dependent Role="StajyerProjeleri">
+              <PropertyRef Name="ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StajyerProjeleri_Stajyer">
+          <End Role="Stajyer" Type="Self.Stajyer" Multiplicity="1" />
+          <End Role="StajyerProjeleri" Type="Self.StajyerProjeleri" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Stajyer">
+              <PropertyRef Name="stajyerID" />
+            </Principal>
+            <Dependent Role="StajyerProjeleri">
+              <PropertyRef Name="ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="OfisDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Demirbas" EntityType="Self.Demirba" />
+          <EntitySet Name="Giders" EntityType="Self.Gider" />
+          <EntitySet Name="Kullanicis" EntityType="Self.Kullanici" />
+          <EntitySet Name="OfisTakvimis" EntityType="Self.OfisTakvimi" />
+          <EntitySet Name="Projelers" EntityType="Self.Projeler" />
+          <EntitySet Name="Stajyers" EntityType="Self.Stajyer" />
+          <EntitySet Name="StajyerProjeleris" EntityType="Self.StajyerProjeleri" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <AssociationSet Name="FK_OfisTakvimi_Stajyer" Association="Self.FK_OfisTakvimi_Stajyer">
+            <End Role="Stajyer" EntitySet="Stajyers" />
+            <End Role="OfisTakvimi" EntitySet="OfisTakvimis" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StajyerProjeleri_Projeler" Association="Self.FK_StajyerProjeleri_Projeler">
+            <End Role="Projeler" EntitySet="Projelers" />
+            <End Role="StajyerProjeleri" EntitySet="StajyerProjeleris" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StajyerProjeleri_Stajyer" Association="Self.FK_StajyerProjeleri_Stajyer">
+            <End Role="Stajyer" EntitySet="Stajyers" />
+            <End Role="StajyerProjeleri" EntitySet="StajyerProjeleris" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="OfisDBModelStoreContainer" CdmEntityContainer="OfisDBEntities">
+          <EntitySetMapping Name="Demirbas">
+            <EntityTypeMapping TypeName="OfisDBModel.Demirba">
+              <MappingFragment StoreEntitySet="Demirbas">
+                <ScalarProperty Name="demirbasID" ColumnName="demirbasID" />
+                <ScalarProperty Name="esyaAdi" ColumnName="esyaAdi" />
+                <ScalarProperty Name="adet" ColumnName="adet" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Giders">
+            <EntityTypeMapping TypeName="OfisDBModel.Gider">
+              <MappingFragment StoreEntitySet="Gider">
+                <ScalarProperty Name="giderID" ColumnName="giderID" />
+                <ScalarProperty Name="giderAdi" ColumnName="giderAdi" />
+                <ScalarProperty Name="giderMiktari" ColumnName="giderMiktari" />
+                <ScalarProperty Name="tarih" ColumnName="tarih" />
+                <ScalarProperty Name="donem" ColumnName="donem" />
+                <ScalarProperty Name="aciklama" ColumnName="aciklama" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kullanicis">
+            <EntityTypeMapping TypeName="OfisDBModel.Kullanici">
+              <MappingFragment StoreEntitySet="Kullanici">
+                <ScalarProperty Name="kullaniciID" ColumnName="kullaniciID" />
+                <ScalarProperty Name="kullaniciAdi" ColumnName="kullaniciAdi" />
+                <ScalarProperty Name="kullaniciSifre" ColumnName="kullaniciSifre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OfisTakvimis">
+            <EntityTypeMapping TypeName="OfisDBModel.OfisTakvimi">
+              <MappingFragment StoreEntitySet="OfisTakvimi">
+                <ScalarProperty Name="günID" ColumnName="günID" />
+                <ScalarProperty Name="günAdi" ColumnName="günAdi" />
+                <ScalarProperty Name="aralik" ColumnName="aralik" />
+                <ScalarProperty Name="stajyerID" ColumnName="stajyerID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Projelers">
+            <EntityTypeMapping TypeName="OfisDBModel.Projeler">
+              <MappingFragment StoreEntitySet="Projeler">
+                <ScalarProperty Name="projeID" ColumnName="projeID" />
+                <ScalarProperty Name="projeAdi" ColumnName="projeAdi" />
+                <ScalarProperty Name="projeBaslangic" ColumnName="projeBaslangic" />
+                <ScalarProperty Name="projeBitis" ColumnName="projeBitis" />
+                <ScalarProperty Name="projeAciklamasi" ColumnName="projeAciklamasi" />
+                <ScalarProperty Name="stajyerID" ColumnName="stajyerID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Stajyers">
+            <EntityTypeMapping TypeName="OfisDBModel.Stajyer">
+              <MappingFragment StoreEntitySet="Stajyer">
+                <ScalarProperty Name="stajyerID" ColumnName="stajyerID" />
+                <ScalarProperty Name="adsoyad" ColumnName="adsoyad" />
+                <ScalarProperty Name="TC" ColumnName="TC" />
+                <ScalarProperty Name="telefonNo" ColumnName="telefonNo" />
+                <ScalarProperty Name="eposta" ColumnName="eposta" />
+                <ScalarProperty Name="universite" ColumnName="universite" />
+                <ScalarProperty Name="stajBaslangic" ColumnName="stajBaslangic" />
+                <ScalarProperty Name="stajBitis" ColumnName="stajBitis" />
+                <ScalarProperty Name="durum" ColumnName="durum" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StajyerProjeleris">
+            <EntityTypeMapping TypeName="OfisDBModel.StajyerProjeleri">
+              <MappingFragment StoreEntitySet="StajyerProjeleri">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="stajyerID" ColumnName="stajyerID" />
+                <ScalarProperty Name="projeID" ColumnName="projeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="OfisDBModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="c9d5376f304f4f39a9514bafad103a73" Name="Diagram1">
+        <EntityTypeShape EntityType="OfisDBModel.Demirba" Width="1.5" PointX="5.75" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="OfisDBModel.Gider" Width="1.5" PointX="2.75" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="OfisDBModel.Kullanici" Width="1.5" PointX="5.75" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="OfisDBModel.OfisTakvimi" Width="1.5" PointX="3" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OfisDBModel.Projeler" Width="1.5" PointX="0.75" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="OfisDBModel.Stajyer" Width="1.5" PointX="0.75" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="OfisDBModel.StajyerProjeleri" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OfisDBModel.sysdiagram" Width="1.5" PointX="4.75" PointY="8.125" IsExpanded="true" />
+        <AssociationConnector Association="OfisDBModel.FK_OfisTakvimi_Stajyer" ManuallyRouted="false" />
+        <AssociationConnector Association="OfisDBModel.FK_StajyerProjeleri_Projeler" ManuallyRouted="false" />
+        <AssociationConnector Association="OfisDBModel.FK_StajyerProjeleri_Stajyer" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
